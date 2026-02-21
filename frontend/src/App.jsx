@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import Signup from './Pages/Signup';
 import Signin from './Pages/Signin';
 import ForgotPassword from './Pages/ForgotPassword';
+import Dashboard from './Pages/Dashboard';
 
 function App() {
   const username = localStorage.getItem('username');
@@ -18,7 +19,7 @@ function App() {
       <Toaster position="top-right" reverseOrder={false} />
       <nav className="border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold tracking-tight text-indigo-600">BookHive</Link>
+          <Link to={username ? "/dashboard" : "/"} className="text-2xl font-bold tracking-tight text-indigo-600">BookHive</Link>
           <div className="space-x-6 flex items-center">
             {username ? (
               <>
@@ -53,6 +54,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </main>
     </div>

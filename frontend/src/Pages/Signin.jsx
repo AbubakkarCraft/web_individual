@@ -17,7 +17,7 @@ const Signin = () => {
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', data.username);
             toast.success('Welcome back!');
-            navigate('/');
+            navigate('/dashboard');
         } catch (err) {
             const msg = err.response?.data?.message || 'Invalid credentials';
             setError(msg);

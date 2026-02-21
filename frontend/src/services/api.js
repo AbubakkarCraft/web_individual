@@ -8,4 +8,7 @@ export const signup = (userData) => api.post('/auth/signup', userData);
 export const signin = (credentials) => api.post('/auth/signin', credentials);
 export const forgotPassword = (email) => api.post('/auth/forgot-password', { email });
 
+// Book Service
+export const getBooks = () => api.get('/books');
+
 export default api;
