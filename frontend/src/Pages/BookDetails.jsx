@@ -58,11 +58,18 @@ const BookDetails = () => {
                             />
                         </div>
                         <div className="md:w-2/3 p-8 md:p-12">
-                            <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full mb-4 inline-block">
-                                {book.category}
-                            </span>
                             <h1 className="text-4xl font-bold text-gray-900 mb-2">{book.title}</h1>
-                            <p className="text-xl text-gray-600 mb-8">by {book.author}</p>
+                            <p className="text-xl text-gray-600 mb-4">by {book.author}</p>
+
+                            <div className="flex items-center gap-6 mb-8">
+                                <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    {book.category}
+                                </span>
+                                <div className="flex items-center gap-1.5 text-gray-500 text-sm font-medium">
+                                    <BookIcon size={16} className="text-indigo-400" />
+                                    {book.content ? `${book.content.length} Pages` : 'No pages available'}
+                                </div>
+                            </div>
 
                             <div className="space-y-6">
                                 <div>
@@ -73,10 +80,13 @@ const BookDetails = () => {
                                 </div>
 
                                 <div className="pt-8">
-                                    <button className="bg-indigo-600 text-white font-bold py-4 px-8 rounded-2xl hover:bg-indigo-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200">
+                                    <Link
+                                        to={`/read/${book.id}`}
+                                        className="bg-indigo-600 text-white font-bold py-4 px-8 rounded-2xl hover:bg-indigo-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200"
+                                    >
                                         <BookIcon size={20} />
                                         Start Reading
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

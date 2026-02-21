@@ -24,6 +24,9 @@ const Book = sequelize.define('Book', {
     category: {
         type: DataTypes.STRING,
     },
+    content: {
+        type: DataTypes.JSON, // Array of strings representing pages
+    },
 }, {
     timestamps: true,
 });

@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+@theme {
+    --animate-fade-in: fade-in 0.5s ease-out;
+    --animate-slide-up: slide-up 0.4s ease-out;
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-up {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+}
+
+/* Reader Specific Styles */
+.book-shadow {
+    box-shadow: 0 10px 50px -12px rgba(0, 0, 0, 0.1), 0 4px 25px -10px rgba(0, 0, 0, 0.05);
+}
+
+.animate-fade-in {
+    animation: var(--animate-fade-in);
+}
+
+.animate-slide-up {
+    animation: var(--animate-slide-up);
+}

@@ -1,13 +1,16 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Signup from './Pages/Signup';
 import Signin from './Pages/Signin';
 import ForgotPassword from './Pages/ForgotPassword';
 import Dashboard from './Pages/Dashboard';
 import BookDetails from './Pages/BookDetails';
+import Reader from './Pages/Reader';
 
 function App() {
   const username = localStorage.getItem('username');
+  const location = useLocation();
+  const isReaderPage = location.pathname.startsWith('/read/');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -18,24 +21,27 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 text-black selection:bg-indigo-500/30">
       <Toaster position="top-right" reverseOrder={false} />
-      <nav className="border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <Link to={username ? "/dashboard" : "/"} className="text-2xl font-bold tracking-tight text-indigo-600">BookHive</Link>
-          <div className="space-x-6 flex items-center">
-            {username ? (
-              <>
-                <span className="font-medium text-gray-700">Hi, {username}!</span>
-                <button onClick={handleLogout} className="text-gray-600 hover:text-black font-medium transition">Logout</button>
-              </>
-            ) : (
-              <>
-                <Link to="/signin" className="text-gray-600 hover:text-black font-medium transition">Sign In</Link>
-                <Link to="/signup" className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-sm">Get Started</Link>
-              </>
-            )}
+
+      {!isReaderPage && (
+        <nav className="border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50 animate-fade-in">
+          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+            <Link to={username ? "/dashboard" : "/"} className="text-2xl font-bold tracking-tight text-indigo-600">BookHive</Link>
+            <div className="space-x-6 flex items-center">
+              {username ? (
+                <>
+                  <span className="font-medium text-gray-700">Hi, {username}!</span>
+                  <button onClick={handleLogout} className="text-gray-600 hover:text-black font-medium transition">Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/signin" className="text-gray-600 hover:text-black font-medium transition">Sign In</Link>
+                  <Link to="/signup" className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-sm">Get Started</Link>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
 
       <main>
         <Routes>
@@ -57,6 +63,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/book/:id" element={<BookDetails />} />
+          <Route path="/read/:id" element={<Reader />} />
         </Routes>
       </main>
     </div>

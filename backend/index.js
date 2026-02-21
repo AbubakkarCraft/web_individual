@@ -11,8 +11,8 @@ const port = process.env.PORT || 5000;
 
 // Connect and Sync DB
 connectDB();
-sequelize.sync().then(() => {
-    console.log('Database synced');
+sequelize.sync({ alter: true }).then(() => {
+    console.log('Database synced (with alter: true)');
 }).catch(err => {
     console.error('Failed to sync database:', err);
 });
