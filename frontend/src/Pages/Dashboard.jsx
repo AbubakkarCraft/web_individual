@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getBooks } from '../services/api';
 import toast from 'react-hot-toast';
 import { Book as BookIcon, Search } from 'lucide-react';
@@ -49,29 +50,31 @@ const Dashboard = () => {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {books.map((book) => (
-                            <div key={book.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all group flex flex-col">
-                                <div className="aspect-[2/3] overflow-hidden bg-gray-100 relative">
-                                    <img
-                                        src={book.coverImage}
-                                        alt={book.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                    <span className="absolute top-3 left-3 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-md">
-                                        {book.category}
-                                    </span>
-                                </div>
-                                <div className="p-6 flex-grow">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-1 line-clamp-1">{book.title}</h3>
-                                    <p className="text-gray-600 text-sm mb-4">by {book.author}</p>
-                                    <p className="text-gray-500 text-xs line-clamp-3 mb-6 leading-relaxed">
-                                        {book.description}
-                                    </p>
-                                </div>
+                            <div key={book.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all group flex flex-col cursor-pointer">
+                                <Link to={`/book/${book.id}`} className="flex-grow">
+                                    <div className="aspect-[2/3] overflow-hidden bg-gray-100 relative">
+                                        <img
+                                            src={book.coverImage}
+                                            alt={book.title}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        />
+                                        <span className="absolute top-3 left-3 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-md">
+                                            {book.category}
+                                        </span>
+                                    </div>
+                                    <div className="p-6">
+                                        <h3 className="text-xl font-bold text-gray-900 mb-1 line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{book.title}</h3>
+                                        <p className="text-gray-600 text-sm mb-4">by {book.author}</p>
+                                        <p className="text-gray-500 text-xs line-clamp-3 leading-relaxed">
+                                            {book.description}
+                                        </p>
+                                    </div>
+                                </Link>
                                 <div className="px-6 pb-6 mt-auto">
-                                    <button className="w-full bg-white border-2 border-indigo-600 text-indigo-600 font-bold py-2.5 rounded-xl hover:bg-indigo-600 hover:text-white transition-all flex items-center justify-center gap-2">
+                                    <Link to={`/book/${book.id}`} className="w-full bg-white border-2 border-indigo-600 text-indigo-600 font-bold py-2.5 rounded-xl hover:bg-indigo-600 hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm">
                                         <BookIcon size={18} />
                                         Read Now
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         ))}

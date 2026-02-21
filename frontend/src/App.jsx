@@ -4,6 +4,7 @@ import Signup from './Pages/Signup';
 import Signin from './Pages/Signin';
 import ForgotPassword from './Pages/ForgotPassword';
 import Dashboard from './Pages/Dashboard';
+import BookDetails from './Pages/BookDetails';
 
 function App() {
   const username = localStorage.getItem('username');
@@ -55,6 +56,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/book/:id" element={<BookDetails />} />
         </Routes>
       </main>
     </div>

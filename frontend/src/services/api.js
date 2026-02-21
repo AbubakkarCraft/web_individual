@@ -10,5 +10,6 @@ export const forgotPassword = (email) => api.post('/auth/forgot-password', { ema
 
 // Book Service
 export const getBooks = () => api.get('/books');
+export const getBookById = (id) => api.get(`/books/${id}`);
 
 export default api;
