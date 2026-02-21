@@ -1,0 +1,62 @@
+import { Routes, Route, Link } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import Signup from './Pages/Signup';
+import Signin from './Pages/Signin';
+import ForgotPassword from './Pages/ForgotPassword';
+
+function App() {
+  const username = localStorage.getItem('username');
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    window.location.reload();
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-black selection:bg-indigo-500/30">
+      <Toaster position="top-right" reverseOrder={false} />
+      <nav className="border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <Link to="/" className="text-2xl font-bold tracking-tight text-indigo-600">BookHive</Link>
+          <div className="space-x-6 flex items-center">
+            {username ? (
+              <>
+                <span className="font-medium text-gray-700">Hi, {username}!</span>
+                <button onClick={handleLogout} className="text-gray-600 hover:text-black font-medium transition">Logout</button>
+              </>
+            ) : (
+              <>
+                <Link to="/signin" className="text-gray-600 hover:text-black font-medium transition">Sign In</Link>
+                <Link to="/signup" className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-sm">Get Started</Link>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        <Routes>
+          <Route path="/" element={
+            <div className="text-center py-20 px-4">
+              <h1 className="text-5xl font-extrabold text-indigo-900 mb-6">Welcome to BookHive</h1>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10">
+                Discover your next favorite book, build your wishlist, and keep your thoughts organized with personal notes.
+              </p>
+              {!username && (
+                <Link to="/signup" className="bg-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-indigo-700 shadow-xl transition-all hover:scale-105">
+                  Join BookHive Now
+                </Link>
+              )}
+            </div>
+          } />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+export default App;
