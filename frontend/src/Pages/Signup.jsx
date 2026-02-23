@@ -24,41 +24,41 @@ const Signup = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center p-4">
-            <div className="max-w-md w-full bg-white rounded-3xl shadow-sm border border-gray-200 p-10">
-                <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">Create Account</h2>
+        <div className="min-h-[calc(100vh-80px)] bg-gray-50 dark:bg-[#0f1115] flex items-center justify-center p-4 transition-colors">
+            <div className="max-w-md w-full bg-white dark:bg-[#161b22] rounded-3xl shadow-sm border border-gray-200 dark:border-[#21262d] p-10">
+                <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">Create Account</h2>
                 {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Username</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-400">Username</label>
                         <input
                             type="text"
                             required
-                            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 bg-gray-50 dark:bg-[#0f1115] border border-gray-300 dark:border-[#21262d] rounded-lg focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
                             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Email Address</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-400">Email Address</label>
                         <input
                             type="email"
                             required
-                            className="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 bg-gray-50 dark:bg-[#0f1115] border border-gray-300 dark:border-[#21262d] rounded-lg focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Password</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-400">Password</label>
                         <div className="mt-1 relative">
                             <input
                                 type={showPassword ? "text" : "password"}
                                 required
-                                className="block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 pr-10"
+                                className="block w-full px-4 py-2 bg-gray-50 dark:bg-[#0f1115] border border-gray-300 dark:border-[#21262d] rounded-lg focus:ring-indigo-500 focus:border-indigo-500 pr-10 dark:text-white"
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />
                             <button
                                 type="button"
-                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
                                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -72,8 +72,8 @@ const Signup = () => {
                         Sign Up
                     </button>
                 </form>
-                <p className="mt-6 text-center text-sm text-gray-600">
-                    Already have an account? <Link to="/signin" className="text-indigo-600 hover:underline">Sign In</Link>
+                <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+                    Already have an account? <Link to="/signin" className="text-indigo-600 dark:text-indigo-400 hover:underline">Sign In</Link>
                 </p>
             </div>
         </div>

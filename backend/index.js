@@ -9,6 +9,9 @@ const bookRoutes = require('./routes/bookRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const wishlistRoutes = require('./routes/wishlistRoutes');
 const noteRoutes = require('./routes/noteRoutes');
+const userRoutes = require('./routes/userRoutes');
+const progressRoutes = require('./routes/progressRoutes');
+const ratingRoutes = require('./routes/ratingRoutes');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -38,6 +41,9 @@ app.use('/api/books', bookRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/notes', noteRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/progress', progressRoutes);
+app.use('/api/ratings', ratingRoutes);
 
 app.get('/', (req, res) => {
     res.send('BookHive API is running...');

@@ -1,15 +1,11 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database/db');
 
-const Note = sequelize.define('Note', {
+const ReadingProgress = sequelize.define('ReadingProgress', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-    },
-    text: {
-        type: DataTypes.TEXT,
-        allowNull: false,
     },
     userId: {
         type: DataTypes.UUID,
@@ -19,12 +15,16 @@ const Note = sequelize.define('Note', {
         type: DataTypes.UUID,
         allowNull: false,
     },
-    pageNumber: {
+    currentPage: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        defaultValue: 0,
+    },
+    lastRead: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
     },
 }, {
     timestamps: true,
 });
 
-module.exports = Note;
+module.exports = ReadingProgress;

@@ -1,15 +1,11 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database/db');
 
-const Note = sequelize.define('Note', {
+const Rating = sequelize.define('Rating', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-    },
-    text: {
-        type: DataTypes.TEXT,
-        allowNull: false,
     },
     userId: {
         type: DataTypes.UUID,
@@ -19,12 +15,22 @@ const Note = sequelize.define('Note', {
         type: DataTypes.UUID,
         allowNull: false,
     },
-    pageNumber: {
+    score: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+            min: 1,
+            max: 5,
+        },
     },
 }, {
     timestamps: true,
+    indexes: [
+        {
+            unique: true,
+            fields: ['userId', 'bookId']
+        }
+    ]
 });
 
-module.exports = Note;
+module.exports = Rating;

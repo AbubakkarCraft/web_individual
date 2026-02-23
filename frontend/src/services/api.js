@@ -60,4 +60,58 @@ export const deleteNote = (noteId) => {
     });
 };
 
+export const getProfile = () => {
+    const token = localStorage.getItem('token');
+    return api.get('/users/me', {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
+export const updateProfile = (profileData) => {
+    const token = localStorage.getItem('token');
+    return api.put('/users/update', profileData, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
+export const getProgress = (bookId) => {
+    const token = localStorage.getItem('token');
+    return api.get(`/progress/${bookId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
+export const updateProgress = (bookId, currentPage) => {
+    const token = localStorage.getItem('token');
+    return api.post('/progress', { bookId, currentPage }, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
+export const getAllProgress = () => {
+    const token = localStorage.getItem('token');
+    return api.get('/progress', {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
+// Rating Service
+export const getBookRatings = (bookId) => {
+    return api.get(`/ratings/book/${bookId}`);
+};
+
+export const getUserRating = (bookId) => {
+    const token = localStorage.getItem('token');
+    return api.get(`/ratings/user/${bookId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
+export const submitRating = (bookId, score) => {
+    const token = localStorage.getItem('token');
+    return api.post('/ratings', { bookId, score }, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+};
+
 export default api;

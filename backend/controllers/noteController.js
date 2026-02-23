@@ -17,13 +17,14 @@ const getNotesByBookId = async (req, res) => {
 
 const addNote = async (req, res) => {
     try {
-        const { bookId, text } = req.body;
+        const { bookId, text, pageNumber } = req.body;
         const userId = req.user.userId;
 
         const note = await Note.create({
             text,
             userId,
-            bookId
+            bookId,
+            pageNumber
         });
 
         res.status(201).json(note);
