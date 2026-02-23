@@ -6,6 +6,7 @@ import ForgotPassword from './Pages/ForgotPassword';
 import Dashboard from './Pages/Dashboard';
 import BookDetails from './Pages/BookDetails';
 import Reader from './Pages/Reader';
+import Wishlist from './Pages/Wishlist';
 
 function App() {
   const username = localStorage.getItem('username');
@@ -29,6 +30,10 @@ function App() {
             <div className="space-x-6 flex items-center">
               {username ? (
                 <>
+                  <Link to="/wishlist" className="text-gray-600 hover:text-rose-600 font-medium transition flex items-center gap-1.5">
+                    <Heart size={18} />
+                    Wishlist
+                  </Link>
                   <span className="font-medium text-gray-700">Hi, {username}!</span>
                   <button onClick={handleLogout} className="text-gray-600 hover:text-black font-medium transition">Logout</button>
                 </>
@@ -64,6 +69,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/book/:id" element={<BookDetails />} />
           <Route path="/read/:id" element={<Reader />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
       </main>
     </div>

@@ -35,7 +35,7 @@ const seedBooks = async () => {
             title: "Alice's Adventures in Wonderland",
             author: "Lewis Carroll",
             description: "An 1865 English children's novel by Lewis Carroll, a mathematics don at Oxford.",
-            coverImage: "https://m.media-amazon.com/images/I/91Nb7tCAnEL._AC_UF1000,1000_QL80_.jpg",
+            coverImage: "https://m.media-amazon.com/images/I/90S8Msy88vL._AC_UF1000,1000_QL80_.jpg",
             category: "Fantasy",
             content: [
                 "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, “and what is the use of a book,” thought Alice “without pictures or conversations?”",
