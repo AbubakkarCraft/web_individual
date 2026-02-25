@@ -132,4 +132,20 @@ export const submitRating = (bookId, score) => {
     });
 };
 
+// Review Service
+export const getAllReviews = () => api.get('/reviews');
+export const getReviewsByBook = (bookId) => api.get(`/reviews/book/${bookId}`);
+export const postReview = (reviewData) => {
+    const token = localStorage.getItem('token');
+    return api.post('/reviews', reviewData, { headers: { Authorization: `Bearer ${token}` } });
+};
+export const updateReview = (reviewId, reviewData) => {
+    const token = localStorage.getItem('token');
+    return api.put(`/reviews/${reviewId}`, reviewData, { headers: { Authorization: `Bearer ${token}` } });
+};
+export const deleteReview = (reviewId) => {
+    const token = localStorage.getItem('token');
+    return api.delete(`/reviews/${reviewId}`, { headers: { Authorization: `Bearer ${token}` } });
+};
+
 export default api;

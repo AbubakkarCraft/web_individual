@@ -8,6 +8,7 @@ import BookDetails from './Pages/BookDetails';
 import Reader from './Pages/Reader';
 import Wishlist from './Pages/Wishlist';
 import Profile from './Pages/Profile';
+import ReviewCommunity from './Pages/ReviewCommunity';
 import { User as UserIcon, Heart, Book as BookIcon } from 'lucide-react';
 import { ThemeProvider } from './context/ThemeContext';
 import ThemeToggle from './components/ThemeToggle';
@@ -37,6 +38,7 @@ function App() {
               </Link>
               <div className="space-x-4 flex items-center">
                 <ThemeToggle />
+                <Link to="/reviews" className="text-gray-600 hover:text-indigo-600 font-medium transition">Community</Link>
                 {username ? (
                   <>
                     <Link to="/wishlist" className="text-gray-600 hover:text-rose-600 font-medium transition flex items-center gap-1.5">
@@ -81,6 +83,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/book/:id" element={<BookDetails />} />
+            <Route path="/reviews" element={<ReviewCommunity />} />
             <Route path="/read/:id" element={<Reader />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/profile" element={<Profile />} />

@@ -5,6 +5,7 @@ const Wishlist = require('./Wishlist');
 const Note = require('./Note');
 const ReadingProgress = require('./ReadingProgress');
 const Rating = require('./Rating');
+const Review = require('./Review');
 
 const { sequelize } = require('../database/db');
 
@@ -50,4 +51,12 @@ Rating.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 Book.hasMany(Rating, { foreignKey: 'bookId', as: 'ratings' });
 Rating.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
 
-module.exports = { User, Book, Comment, Wishlist, Note, ReadingProgress, Rating, sequelize };
+// User <-> Review
+User.hasMany(Review, { foreignKey: 'userId', as: 'reviews' });
+Review.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+// Book <-> Review
+Book.hasMany(Review, { foreignKey: 'bookId', as: 'reviews' });
+Review.belongsTo(Book, { foreignKey: 'bookId', as: 'book' });
+
+module.exports = { User, Book, Comment, Wishlist, Note, ReadingProgress, Rating, Review, sequelize };
