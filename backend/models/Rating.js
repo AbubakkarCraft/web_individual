@@ -25,6 +25,7 @@ const Rating = sequelize.define('Rating', {
     },
 }, {
     timestamps: true,
+    tableName: 'Ratings',
     indexes: [
         {
             unique: true,

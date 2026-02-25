@@ -25,6 +25,7 @@ const ReadingProgress = sequelize.define('ReadingProgress', {
     },
 }, {
     timestamps: true,
+    tableName: 'ReadingProgress',
 });
 
 module.exports = ReadingProgress;

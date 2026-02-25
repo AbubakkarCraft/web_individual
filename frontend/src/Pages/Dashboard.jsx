@@ -27,6 +27,12 @@ const Dashboard = () => {
                     }
                 }
             } catch (err) {
+                if (err.response?.status === 401) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('username');
+                    window.location.reload();
+                    return;
+                }
                 toast.error('Failed to load dashboard');
             } finally {
                 setLoading(false);
@@ -121,8 +127,8 @@ const Dashboard = () => {
                                 key={category}
                                 onClick={() => setSelectedCategory(category)}
                                 className={`px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap border ${selectedCategory === category
-                                        ? 'bg-indigo-600 text-white border-indigo-600 dark:border-indigo-500 shadow-xl shadow-indigo-100 dark:shadow-none'
-                                        : 'bg-white dark:bg-[#161b22] text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-[#21262d] border-gray-100 dark:border-[#21262d]'
+                                    ? 'bg-indigo-600 text-white border-indigo-600 dark:border-indigo-500 shadow-xl shadow-indigo-100 dark:shadow-none'
+                                    : 'bg-white dark:bg-[#161b22] text-gray-400 dark:text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-[#21262d] border-gray-100 dark:border-[#21262d]'
                                     }`}
                             >
                                 {category}

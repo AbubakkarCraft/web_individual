@@ -3,10 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import {
     getBookById, getComments, postComment, getWishlist,
     toggleWishlist, getNotes, postNote, deleteNote,
-    getUserRating, submitRating
+    getUserRating, submitRating, updateComment, deleteComment
 } from '../services/api';
 import toast from 'react-hot-toast';
-import { ArrowLeft, Book as BookIcon, MessageSquare, Send, User as UserIcon, Heart, Notebook, Trash2, Plus, Star } from 'lucide-react';
+import { ArrowLeft, Book as BookIcon, MessageSquare, Send, User as UserIcon, Heart, Notebook, Trash2, Plus, Star, Edit2, Check, X } from 'lucide-react';
 import StarRating from '../components/StarRating';
 
 const BookDetails = () => {
@@ -19,6 +19,10 @@ const BookDetails = () => {
 
     // Wishlist State
     const [isSaved, setIsSaved] = useState(false);
+
+    // Comment Edit State
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editCommentText, setEditCommentText] = useState('');
 
     // Notes State
     const [notes, setNotes] = useState([]);
@@ -58,6 +62,13 @@ const BookDetails = () => {
                     setUserRating(userRatingRes.data.score || 0);
                 }
             } catch (err) {
+                if (err.response?.status === 401) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('username');
+                    toast.error('Session expired. Please sign in again.');
+                    navigate('/signin');
+                    return;
+                }
                 console.error('Error fetching details:', err);
                 toast.error('Failed to load book details');
             } finally {
@@ -150,6 +161,30 @@ const BookDetails = () => {
             toast.success('Note deleted');
         } catch (err) {
             toast.error('Failed to delete note');
+        }
+    };
+
+    const handleCommentDelete = async (commentId) => {
+        if (!window.confirm('Are you sure you want to delete this comment?')) return;
+        try {
+            await deleteComment(commentId);
+            setComments(comments.filter(c => c.id !== commentId));
+            toast.success('Comment deleted');
+        } catch (err) {
+            toast.error('Failed to delete comment');
+        }
+    };
+
+    const handleCommentEditSubmit = async (commentId) => {
+        if (!editCommentText.trim()) return;
+        try {
+            const { data } = await updateComment(commentId, { text: editCommentText });
+            setComments(comments.map(c => c.id === commentId ? data : c));
+            setEditingCommentId(null);
+            setEditCommentText('');
+            toast.success('Comment updated');
+        } catch (err) {
+            toast.error('Failed to update comment');
         }
     };
 
@@ -405,10 +440,57 @@ const BookDetails = () => {
                                                     })}
                                                 </span>
                                             </div>
+                                            {username === comment.user?.username && (
+                                                <div className="flex gap-2">
+                                                    {editingCommentId === comment.id ? (
+                                                        <>
+                                                            <button
+                                                                onClick={() => handleCommentEditSubmit(comment.id)}
+                                                                className="text-green-500 hover:text-green-600 transition-colors"
+                                                            >
+                                                                <Check size={16} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => setEditingCommentId(null)}
+                                                                className="text-gray-400 hover:text-gray-500 transition-colors"
+                                                            >
+                                                                <X size={16} />
+                                                            </button>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <button
+                                                                onClick={() => {
+                                                                    setEditingCommentId(comment.id);
+                                                                    setEditCommentText(comment.text);
+                                                                }}
+                                                                className="text-indigo-400 hover:text-indigo-600 transition-colors"
+                                                            >
+                                                                <Edit2 size={16} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleCommentDelete(comment.id)}
+                                                                className="text-rose-400 hover:text-rose-600 transition-colors"
+                                                            >
+                                                                <Trash2 size={16} />
+                                                            </button>
+                                                        </>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
-                                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed font-medium bg-gray-50 dark:bg-[#0f1115] p-6 rounded-[1.8rem] rounded-tl-none border border-gray-100/50 dark:border-[#21262d] group-hover:bg-white dark:group-hover:bg-[#161b22] group-hover:shadow-md transition-all duration-500">
-                                            {comment.text}
-                                        </p>
+                                        {editingCommentId === comment.id ? (
+                                            <textarea
+                                                value={editCommentText}
+                                                onChange={(e) => setEditCommentText(e.target.value)}
+                                                className="w-full bg-white dark:bg-[#161b22] border-2 border-indigo-100 dark:border-indigo-900 rounded-2xl p-4 font-medium text-gray-700 dark:text-gray-300 outline-none focus:ring-4 focus:ring-indigo-50 dark:focus:ring-indigo-900/10 transition-all resize-none"
+                                                autoFocus
+                                            />
+                                        ) : (
+                                            <p className="text-gray-700 dark:text-gray-300 leading-relaxed font-medium bg-gray-50 dark:bg-[#0f1115] p-6 rounded-[1.8rem] rounded-tl-none border border-gray-100/50 dark:border-[#21262d] group-hover:bg-white dark:group-hover:bg-[#161b22] group-hover:shadow-md transition-all duration-500">
+                                                {comment.text}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             ))

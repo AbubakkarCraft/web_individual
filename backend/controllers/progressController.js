@@ -46,7 +46,11 @@ const getAllProgress = async (req, res) => {
         const userId = req.user.userId;
         const progressList = await ReadingProgress.findAll({
             where: { userId },
-            include: [{ model: Book, as: 'book' }],
+            include: [{
+                model: Book,
+                as: 'book',
+                required: true // This ensures only records with an existing book are returned
+            }],
             order: [['lastRead', 'DESC']]
         });
         res.status(200).json(progressList);

@@ -4,10 +4,11 @@ const { sequelize } = require('../database/db');
 const seedBooks = async () => {
     const books = [
         {
+            id: "8ec10e9c-951a-466e-bed1-1e31d860ea77",
             title: "The Great Gatsby",
             author: "F. Scott Fitzgerald",
             description: "A story of ambition and obsession in the Jazz Age.",
-            coverImage: "https://m.media-amazon.com/images/I/81QuEGw8VPL._AC_UF1000,1000_QL80_.jpg",
+            coverImage: "https://covers.openlibrary.org/b/id/12836262-L.jpg",
             category: "Classic",
             content: [
                 "In my younger and more vulnerable years my father gave me some advice that I’ve been turning over in my mind ever since. “Whenever you feel like criticizing any one,” he told me, “just remember that all the people in this world haven’t had the advantages that you’ve had.”",
@@ -18,10 +19,12 @@ const seedBooks = async () => {
             ]
         },
         {
+            id: "0e282949-907e-46fd-a520-4a03ece73315",
             title: "Nineteen Eighty-Four",
             author: "George Orwell",
             description: "A dystopian social science fiction novel and cautionary tale.",
-            coverImage: "https://m.media-amazon.com/images/I/71kxa1-0mfL._AC_UF1000,1000_QL80_.jpg",
+            coverImage: "https://covers.openlibrary.org/b/id/12836262-L.jpg", // Placeholder if specific not found, but let's try to be better.
+            coverImage: "https://covers.openlibrary.org/b/id/11441865-L.jpg",
             category: "Dystopian",
             content: [
                 "It was a bright cold day in April, and the clocks were striking thirteen. Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions, though not quickly enough to prevent a swirl of gritty dust from entering along with him.",
@@ -32,10 +35,11 @@ const seedBooks = async () => {
             ]
         },
         {
+            id: "2de0c59c-db4a-44b8-863c-87c448e10673",
             title: "Alice's Adventures in Wonderland",
             author: "Lewis Carroll",
             description: "An 1865 English children's novel by Lewis Carroll, a mathematics don at Oxford.",
-            coverImage: "https://m.media-amazon.com/images/I/90S8Msy88vL._AC_UF1000,1000_QL80_.jpg",
+            coverImage: "https://covers.openlibrary.org/b/id/10185994-L.jpg",
             category: "Fantasy",
             content: [
                 "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, “and what is the use of a book,” thought Alice “without pictures or conversations?”",
@@ -46,10 +50,12 @@ const seedBooks = async () => {
             ]
         },
         {
+            id: "c699cd40-2677-41ff-86d3-e8f4aeacc4a5",
             title: "Pride and Prejudice",
             author: "Jane Austen",
             description: "A romantic novel of manners written by Jane Austen.",
-            coverImage: "https://m.media-amazon.com/images/I/71Q1tPupKjL._AC_UF1000,1000_QL80_.jpg",
+            coverImage: "https://covers.openlibrary.org/b/id/12836262-L.jpg",
+            coverImage: "https://covers.openlibrary.org/b/id/12668581-L.jpg",
             category: "Romance",
             content: [
                 "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families.",

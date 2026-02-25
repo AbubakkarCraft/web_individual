@@ -23,6 +23,24 @@ export const postComment = (commentData) => {
     });
 };
 
+export const updateComment = (commentId, commentData) => {
+    const token = localStorage.getItem('token');
+    return api.put(`/comments/${commentId}`, commentData, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+};
+
+export const deleteComment = (commentId) => {
+    const token = localStorage.getItem('token');
+    return api.delete(`/comments/${commentId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+};
+
 // Wishlist Service
 export const getWishlist = () => {
     const token = localStorage.getItem('token');
