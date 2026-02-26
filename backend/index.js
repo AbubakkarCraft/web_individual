@@ -17,13 +17,15 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Connect and Sync DB
-connectDB();
-sequelize.sync({ alter: true }).then(() => {
-    console.log('Database synced (with alter: true)');
-}).catch(err => {
-    console.error('Failed to sync database:', err);
-});
+// Connect and Sync DB (Only if not in test mode)
+if (process.env.NODE_ENV !== 'test') {
+    connectDB();
+    sequelize.sync({ alter: true }).then(() => {
+        console.log('Database synced (with alter: true)');
+    }).catch(err => {
+        console.error('Failed to sync database:', err);
+    });
+}
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -51,6 +53,10 @@ app.get('/', (req, res) => {
     res.send('BookHive API is running...');
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => {
+        console.log(`Server is running on port: ${port}`);
+    });
+}
+
+module.exports = app;
