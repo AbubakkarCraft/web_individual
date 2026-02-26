@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllReviews, postReview } from '../services/api';
+import { getAllReviews, postReview, updateReview, deleteReview } from '../services/api';
 import toast from 'react-hot-toast';
 
 const ReviewCommunity = () => {
@@ -9,6 +9,13 @@ const ReviewCommunity = () => {
     const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
     const [recommend, setRecommend] = useState(true);
+
+    // Edit state
+    const [editingId, setEditingId] = useState(null);
+    const [editTitle, setEditTitle] = useState('');
+    const [editContent, setEditContent] = useState('');
+    const [editRating, setEditRating] = useState(0);
+    const [editRecommend, setEditRecommend] = useState(true);
     const username = localStorage.getItem('username');
 
     useEffect(() => {
@@ -41,6 +48,39 @@ const ReviewCommunity = () => {
         } catch (err) {
             console.error(err);
             toast.error('Failed to post review');
+        }
+    };
+
+    const startEdit = (r) => {
+        setEditingId(r.id);
+        setEditTitle(r.title || '');
+        setEditContent(r.content || '');
+        setEditRating(r.rating || 0);
+        setEditRecommend(Boolean(r.recommend));
+    };
+
+    const handleUpdate = async (id) => {
+        if (!editContent.trim()) return;
+        try {
+            const { data } = await updateReview(id, { title: editTitle, content: editContent, rating: editRating, recommend: editRecommend });
+            setReviews(reviews.map(r => r.id === id ? data : r));
+            setEditingId(null);
+            toast.success('Review updated');
+        } catch (err) {
+            console.error(err);
+            toast.error('Failed to update review');
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm('Delete this review?')) return;
+        try {
+            await deleteReview(id);
+            setReviews(reviews.filter(r => r.id !== id));
+            toast.success('Review deleted');
+        } catch (err) {
+            console.error(err);
+            toast.error('Failed to delete review');
         }
     };
 
@@ -87,8 +127,40 @@ const ReviewCommunity = () => {
                                         {r.recommend ? <div className="text-xs text-emerald-600">Recommended</div> : <div className="text-xs text-gray-400">Not recommended</div>}
                                     </div>
                                 </div>
-                                {r.title && <h3 className="mt-4 font-bold text-lg">{r.title}</h3>}
-                                <p className="mt-2 text-gray-700 dark:text-gray-300">{r.content}</p>
+
+                                {/* Author controls */}
+                                {username === r.user?.username && (
+                                    <div className="flex gap-2 mt-3 justify-end">
+                                        {editingId === r.id ? (
+                                            <>
+                                                <button onClick={() => handleUpdate(r.id)} className="px-3 py-1 bg-emerald-600 text-white rounded">Save</button>
+                                                <button onClick={() => setEditingId(null)} className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded">Cancel</button>
+                                                <button onClick={() => handleDelete(r.id)} className="px-3 py-1 bg-rose-500 text-white rounded">Delete</button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => startEdit(r)} className="px-3 py-1 bg-indigo-600 text-white rounded">Edit</button>
+                                                <button onClick={() => handleDelete(r.id)} className="px-3 py-1 bg-rose-500 text-white rounded">Delete</button>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+
+                                {editingId === r.id ? (
+                                    <div className="mt-4 space-y-2">
+                                        <input className="w-full p-2 border rounded" value={editTitle} onChange={e=>setEditTitle(e.target.value)} placeholder="Title (optional)" />
+                                        <textarea className="w-full p-2 border rounded" value={editContent} onChange={e=>setEditContent(e.target.value)} rows={4} />
+                                        <div className="flex items-center gap-3">
+                                            <input type="number" min={0} max={5} className="w-20 p-2 border rounded" value={editRating} onChange={e=>setEditRating(Number(e.target.value))} />
+                                            <label className="flex items-center gap-2"><input type="checkbox" checked={editRecommend} onChange={e=>setEditRecommend(e.target.checked)} /> Recommend</label>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        {r.title && <h3 className="mt-4 font-bold text-lg">{r.title}</h3>}
+                                        <p className="mt-2 text-gray-700 dark:text-gray-300">{r.content}</p>
+                                    </>
+                                )}
                             </div>
                         ))
                     )}
